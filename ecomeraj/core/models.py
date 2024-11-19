@@ -2,7 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Item(models.Model):
-  pass
+  title = models.CharField(max_length=200)
+  price =models.IntegerField()
+  discount_price = models.IntegerField()
+  slug = models.SlugField()
+ 
+  def __str__(self):
+    return self.title
 
 class OrderItem(models.Model):
   user = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -11,7 +17,7 @@ class OrderItem(models.Model):
   quantity = models.IntegerField(default=1)
 
   def __str__(self):
-    return 
+    return f'{self.quantity} of {self.item.title}'
 
 class Order(models.Model):
   user= models.ForeignKey(User,on_delete=models.CASCADE)
